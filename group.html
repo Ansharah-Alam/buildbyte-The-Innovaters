@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>StudySquad - My Group</title>
+  <title>StudySquad - My Groups</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
@@ -14,22 +14,28 @@
   </nav>
 
   <div class="container" style="max-width: 500px;">
-    <div id="noGroupSection">
-      <h4>Create a Group</h4>
+
+    <h4>My Groups</h4>
+    <ul id="myGroupsList" class="list-group mb-2"></ul>
+    <p id="groupLimitMsg" class="text-muted small"></p>
+
+    <div id="joinCreateSection" class="mt-4">
+      <h5>Create a Group</h5>
       <input type="text" id="groupNameInput" class="form-control mb-2" placeholder="Group name">
       <button id="createGroupBtn" class="btn btn-primary w-100 mb-4">Create Group</button>
 
-      <h4>Or Join a Group</h4>
+      <h5>Or Join a Group</h5>
       <input type="text" id="joinCodeInput" class="form-control mb-2" placeholder="Enter group code">
       <button id="joinGroupBtn" class="btn btn-outline-primary w-100">Join Group</button>
     </div>
 
-    <div id="groupSection" style="display:none;">
+    <div id="leaderboardSection" class="mt-4" style="display:none;">
+      <hr>
       <h3 id="groupNameDisplay"></h3>
       <p>Group Code: <strong id="groupCodeDisplay"></strong></p>
-
       <h5 class="mt-4">🏆 Leaderboard</h5>
       <ul id="leaderboardList" class="list-group"></ul>
+      <button id="exitGroupBtn" class="btn btn-outline-danger btn-sm mt-3">Exit This Group</button>
     </div>
 
     <p id="errorMsg" class="text-danger mt-3"></p>
