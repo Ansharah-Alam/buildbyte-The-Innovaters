@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>StudySquad - My Group</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  <nav class="navbar navbar-dark bg-primary mb-4">
+    <div class="container">
+      <span class="navbar-brand mb-0 h1">StudySquad</span>
+      <a href="dashboard.html" class="btn btn-outline-light btn-sm">Back to Dashboard</a>
+    </div>
+  </nav>
+
+  <div class="container" style="max-width: 500px;">
+    <div id="noGroupSection">
+      <h4>Create a Group</h4>
+      <input type="text" id="groupNameInput" class="form-control mb-2" placeholder="Group name">
+      <button id="createGroupBtn" class="btn btn-primary w-100 mb-4">Create Group</button>
+
+      <h4>Or Join a Group</h4>
+      <input type="text" id="joinCodeInput" class="form-control mb-2" placeholder="Enter group code">
+      <button id="joinGroupBtn" class="btn btn-outline-primary w-100">Join Group</button>
+    </div>
+
+    <div id="groupSection" style="display:none;">
+      <h3 id="groupNameDisplay"></h3>
+      <p>Group Code: <strong id="groupCodeDisplay"></strong></p>
+
+      <h5 class="mt-4">🏆 Leaderboard</h5>
+      <ul id="leaderboardList" class="list-group"></ul>
+    </div>
+
+    <p id="errorMsg" class="text-danger mt-3"></p>
+  </div>
+
+  <script type="module" src="js/group.js"></script>
+</body>
+</html>
