@@ -74,6 +74,7 @@ function loadQuestion(index) {
   });
 
   nextBtnEl.disabled = true;
+  nextBtnEl.textContent = index === currentQuestions.length - 1 ? "Finish Quiz" : "Next"; // ✅ added
 }
 
 function checkAnswer(selected) {
@@ -86,7 +87,6 @@ function checkAnswer(selected) {
   if (isCorrect) {
     score += 1;
     updateScoreDisplay();
-    awardXP(10); // STEP 3: award XP on correct answer
   }
 
   optionsContainerEl.querySelectorAll("button").forEach((button) => {
@@ -121,7 +121,8 @@ function showSummary(finalScore, total) {
   quizSectionEl.classList.add("d-none");
   summaryScoreEl.textContent = `You scored ${finalScore} out of ${total}.`;
   summaryEl.classList.remove("d-none");
-  updateStreak(); // STEP 4: update streak once lesson is complete
+  awardXP(finalScore * 10); // ✅ award all XP at once, only when quiz is completed
+  updateStreak();
 }
 
 // STEP 3: Award XP to the logged-in user in Firestore
@@ -132,14 +133,21 @@ async function awardXP(amount) {
 }
 
 // STEP 4: Streak calculation helpers
+function getLocalDateString(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
 function getTodayDateString() {
-  return new Date().toISOString().split("T")[0];
+  return getLocalDateString(new Date());
 }
 
 function getYesterdayDateString() {
   const d = new Date();
   d.setDate(d.getDate() - 1);
-  return d.toISOString().split("T")[0];
+  return getLocalDateString(d);
 }
 
 async function updateStreak() {
