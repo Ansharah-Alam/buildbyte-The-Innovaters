@@ -120,6 +120,7 @@ function nextQuestion() {
 function showSummary(finalScore, total) {
   quizSectionEl.classList.add("d-none");
   summaryScoreEl.textContent = `You scored ${finalScore} out of ${total}.`;
+  document.getElementById("summary-xp").textContent = `+${finalScore * 10} XP earned!`;
   summaryEl.classList.remove("d-none");
   awardXP(finalScore * 10); // ✅ award all XP at once, only when quiz is completed
   updateStreak();
@@ -176,3 +177,12 @@ async function updateStreak() {
 
 startBtnEl.addEventListener("click", startQuiz);
 nextBtnEl.addEventListener("click", nextQuestion);
+document.getElementById("dashboard-btn").addEventListener("click", () => {
+  window.location.href = "dashboard.html";
+});
+
+document.getElementById("retry-btn").addEventListener("click", () => {
+  summaryEl.classList.add("d-none");
+  scoreTextEl.classList.add("d-none");
+  topicSelectorEl.classList.remove("d-none");
+});

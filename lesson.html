@@ -58,15 +58,20 @@
           </section>
 
           <section
-            id="summary"
-            class="card shadow-sm mt-4 d-none"
-            aria-live="polite"
-          >
-            <div class="card-body p-4 text-center">
-              <h2 class="h4 mb-3">Quiz complete!</h2>
-              <p id="summary-score" class="mb-0"></p>
-            </div>
-          </section>
+  id="summary"
+  class="card shadow-sm mt-4 d-none"
+  aria-live="polite"
+>
+  <div class="card-body p-4 text-center">
+    <h2 class="h4 mb-3">Quiz complete!</h2>
+    <p id="summary-score" class="mb-0"></p>
+    <p id="summary-xp" class="fw-bold text-success mb-3"></p>
+    <div class="d-flex gap-2 justify-content-center">
+      <button id="retry-btn" type="button" class="btn btn-outline-primary">Try Another Topic</button>
+      <button id="dashboard-btn" type="button" class="btn btn-primary">Back to Dashboard</button>
+    </div>
+  </div>
+</section>
         </div>
       </div>
     </main>
