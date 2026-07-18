@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+  <title>StudySquad - Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  <nav class="navbar navbar-dark bg-primary mb-4">
+    <div class="container">
+      <span class="navbar-brand mb-0 h1">StudySquad</span>
+      <button id="logoutBtn" class="btn btn-outline-light btn-sm">Log Out</button>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h3 id="welcomeMsg">Loading...</h3>
+
+    <div class="row mt-4">
+      <div class="col-md-6 mb-3">
+        <div class="card text-center p-3">
+          <h5>🔥 Streak</h5>
+          <h2 id="streakValue">0</h2>
+          <p class="text-muted">days in a row</p>
+        </div>
+      </div>
+      <div class="col-md-6 mb-3">
+        <div class="card text-center p-3">
+          <h5>⭐ XP</h5>
+          <h2 id="xpValue">0</h2>
+          <p class="text-muted">total points</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-grid gap-2 col-md-6 mx-auto mt-4">
+      <a href="lesson.html" class="btn btn-primary btn-lg">Start Lesson</a>
+      <a href="group.html" class="btn btn-outline-primary btn-lg">My Group</a>
+    </div>
+  </div>
+
+  <script type="module" src="js/dashboard.js"></script>
+</body>
+</html>
