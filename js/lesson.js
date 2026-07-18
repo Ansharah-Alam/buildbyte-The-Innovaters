@@ -120,8 +120,9 @@ function nextQuestion() {
 function showSummary(finalScore, total) {
   quizSectionEl.classList.add("d-none");
   summaryScoreEl.textContent = `You scored ${finalScore} out of ${total}.`;
+  document.getElementById("summary-xp").textContent = `+${finalScore * 10} XP earned!`;
   summaryEl.classList.remove("d-none");
-  updateStreak(); // STEP 4: update streak once lesson is complete
+  updateStreak();
 }
 
 // STEP 3: Award XP to the logged-in user in Firestore
@@ -168,3 +169,12 @@ async function updateStreak() {
 
 startBtnEl.addEventListener("click", startQuiz);
 nextBtnEl.addEventListener("click", nextQuestion);
+document.getElementById("dashboard-btn").addEventListener("click", () => {
+  window.location.href = "dashboard.html";
+});
+
+document.getElementById("retry-btn").addEventListener("click", () => {
+  summaryEl.classList.add("d-none");
+  scoreTextEl.classList.add("d-none");
+  topicSelectorEl.classList.remove("d-none");
+});
