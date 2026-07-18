@@ -17,7 +17,7 @@ onAuthStateChanged(auth, async (user) => {
 
   if (userDocSnap.exists()) {
     const data = userDocSnap.data();
-    document.getElementById("welcomeMsg").textContent = `Welcome back, ${data.email}!`;
+    document.getElementById("welcomeMsg").textContent = `Welcome back, ${data.username}!`;
     document.getElementById("streakValue").textContent = data.streak || 0;
     document.getElementById("xpValue").textContent = data.xp || 0;
   }

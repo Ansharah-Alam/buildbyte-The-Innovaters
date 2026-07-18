@@ -186,3 +186,13 @@ document.getElementById("retry-btn").addEventListener("click", () => {
   scoreTextEl.classList.add("d-none");
   topicSelectorEl.classList.remove("d-none");
 });
+document.getElementById("exit-btn").addEventListener("click", () => {
+  const potentialXP = score * 10;
+  const confirmExit = confirm(
+    `Are you sure you want to quit? You'll lose ${potentialXP} XP from this quiz attempt.`
+  );
+
+  if (confirmExit) {
+    window.location.href = "dashboard.html";
+  }
+});
