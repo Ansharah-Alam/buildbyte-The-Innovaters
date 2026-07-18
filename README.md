@@ -88,7 +88,7 @@ Don't want to sign up? Use this to log in directly and explore:
 │   ├── lesson.js
 │   └── group.js
 ├── data/
-│   └── questions-fundamental
+│   └── questions-oop.js
 |   └── questions-fundamental.js      # Pre-written quiz questions
 └── README.md
 ```
