@@ -21,7 +21,24 @@
             <p class="text-muted mb-0">Answer each question to earn XP</p>
           </header>
 
-          <section class="card shadow-sm">
+          <section id="topic-selector" class="card shadow-sm">
+            <div class="card-body p-4">
+              <label for="topic-select" class="form-label fw-semibold"
+                >Choose a topic</label
+              >
+              <select id="topic-select" class="form-select mb-3">
+                <option value="oop">OOP</option>
+                <option value="fundamentals">Programming Fundamentals</option>
+              </select>
+              <div class="d-grid">
+                <button id="start-btn" type="button" class="btn btn-primary">
+                  Start
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <section id="quiz-section" class="card shadow-sm d-none">
             <div class="card-body p-4">
               <h2 id="question-text" class="h5 mb-4"></h2>
 
@@ -57,7 +74,8 @@
 
     <!-- Firebase SDK (modular v10 — imported in js/firebase-config.js and js/lesson.js) -->
     <script type="module" src="js/firebase-config.js"></script>
-    <script type="module" src="data/questions.js"></script>
+    <script type="module" src="data/questions-oop.js"></script>
+    <script type="module" src="data/questions-fundamentals.js"></script>
     <script type="module" src="js/lesson.js"></script>
   </body>
 </html>

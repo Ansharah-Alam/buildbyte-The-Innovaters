@@ -1,4 +1,5 @@
-import { questions } from "../data/questions.js";
+import { questionsOOP } from "../data/questions-oop.js";
+import { questionsFundamentals } from "../data/questions-fundamentals.js";
 import { db } from "./firebase-config.js";
 import {
   doc,
@@ -6,16 +7,39 @@ import {
   increment,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+let questions = [];
 let currentIndex = 0;
 let score = 0;
 let answered = false;
 
+const topicSelectorEl = document.getElementById("topic-selector");
+const topicSelectEl = document.getElementById("topic-select");
+const startBtnEl = document.getElementById("start-btn");
+const quizSectionEl = document.getElementById("quiz-section");
 const questionTextEl = document.getElementById("question-text");
 const optionsContainerEl = document.getElementById("options-container");
 const nextBtnEl = document.getElementById("next-btn");
 const summaryEl = document.getElementById("summary");
 const summaryScoreEl = document.getElementById("summary-score");
 const summaryXpEl = document.getElementById("summary-xp");
+
+/**
+ * Load the selected topic's questions and begin the quiz.
+ */
+function startQuiz() {
+  const topic = topicSelectEl.value;
+  questions = topic === "oop" ? questionsOOP : questionsFundamentals;
+
+  currentIndex = 0;
+  score = 0;
+  answered = false;
+
+  topicSelectorEl.classList.add("d-none");
+  quizSectionEl.classList.remove("d-none");
+  summaryEl.classList.add("d-none");
+
+  loadQuestion(currentIndex);
+}
 
 /**
  * Render the question and option buttons for the given index.
@@ -123,16 +147,13 @@ async function updateStreak(userId) {
  */
 function showSummary(score, total) {
   const xpEarned = score * 10;
-  questionTextEl.closest(".card").classList.add("d-none");
-  nextBtnEl.closest(".d-grid").classList.add("d-none");
+
+  quizSectionEl.classList.add("d-none");
 
   summaryScoreEl.textContent = `You scored ${score} out of ${total}.`;
   summaryXpEl.textContent = `You earned ${xpEarned} XP.`;
   summaryEl.classList.remove("d-none");
 }
 
+startBtnEl.addEventListener("click", startQuiz);
 nextBtnEl.addEventListener("click", nextQuestion);
-
-document.addEventListener("DOMContentLoaded", () => {
-  loadQuestion(currentIndex);
-});
