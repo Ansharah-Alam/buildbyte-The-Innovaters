@@ -1,13 +1,7 @@
 import { questionsOOP } from "../data/questions-oop.js";
 import { questionsFundamentals } from "../data/questions-fundamentals.js";
-import { db } from "./firebase-config.js";
-import {
-  doc,
-  updateDoc,
-  increment,
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-let questions = [];
+let currentQuestions = [];
 let currentIndex = 0;
 let score = 0;
 let answered = false;
@@ -15,39 +9,37 @@ let answered = false;
 const topicSelectorEl = document.getElementById("topic-selector");
 const topicSelectEl = document.getElementById("topic-select");
 const startBtnEl = document.getElementById("start-btn");
+const scoreTextEl = document.getElementById("score-text");
 const quizSectionEl = document.getElementById("quiz-section");
 const questionTextEl = document.getElementById("question-text");
 const optionsContainerEl = document.getElementById("options-container");
 const nextBtnEl = document.getElementById("next-btn");
 const summaryEl = document.getElementById("summary");
 const summaryScoreEl = document.getElementById("summary-score");
-const summaryXpEl = document.getElementById("summary-xp");
 
-/**
- * Load the selected topic's questions and begin the quiz.
- */
+function updateScoreDisplay() {
+  scoreTextEl.textContent = `Score: ${score}`;
+}
+
 function startQuiz() {
   const topic = topicSelectEl.value;
-  questions = topic === "oop" ? questionsOOP : questionsFundamentals;
+  currentQuestions = topic === "oop" ? questionsOOP : questionsFundamentals;
 
   currentIndex = 0;
   score = 0;
   answered = false;
 
+  updateScoreDisplay();
   topicSelectorEl.classList.add("d-none");
+  scoreTextEl.classList.remove("d-none");
   quizSectionEl.classList.remove("d-none");
   summaryEl.classList.add("d-none");
 
-  loadQuestion(currentIndex);
+  loadQuestion(0);
 }
 
-/**
- * Render the question and option buttons for the given index.
- * @param {number} index
- */
 function loadQuestion(index) {
-  // TODO: Add loading/error states if questions array is empty or index is invalid.
-  const current = questions[index];
+  const current = currentQuestions[index];
   answered = false;
 
   questionTextEl.textContent = current.question;
@@ -66,23 +58,19 @@ function loadQuestion(index) {
   nextBtnEl.disabled = true;
 }
 
-/**
- * Compare the selected option to the correct answer, style buttons, and lock choices.
- * @param {string} selected
- */
 function checkAnswer(selected) {
   if (answered) return;
 
-  const current = questions[currentIndex];
+  const current = currentQuestions[currentIndex];
   const isCorrect = selected === current.correct;
   answered = true;
 
   if (isCorrect) {
     score += 1;
+    updateScoreDisplay();
   }
 
-  const optionButtons = optionsContainerEl.querySelectorAll("button");
-  optionButtons.forEach((button) => {
+  optionsContainerEl.querySelectorAll("button").forEach((button) => {
     const option = button.dataset.option;
 
     if (option === current.correct) {
@@ -99,59 +87,20 @@ function checkAnswer(selected) {
   nextBtnEl.disabled = false;
 }
 
-/**
- * Advance to the next question or show the end-of-lesson summary.
- */
-async function nextQuestion() {
+function nextQuestion() {
   currentIndex += 1;
 
-  if (currentIndex >= questions.length) {
-    const xpEarned = score * 10;
-
-    // TODO: Replace with the authenticated user's id from Firebase Auth.
-    const userId = "placeholder-user-id";
-    await awardXP(userId, xpEarned);
-    await updateStreak(userId);
-    showSummary(score, questions.length);
+  if (currentIndex >= currentQuestions.length) {
+    showSummary(score, currentQuestions.length);
     return;
   }
 
   loadQuestion(currentIndex);
 }
 
-/**
- * Increment the user's XP in Firestore.
- * @param {string} userId
- * @param {number} amount
- */
-async function awardXP(userId, amount) {
-  const userRef = doc(db, "users", userId);
-  await updateDoc(userRef, {
-    xp: increment(amount),
-  });
-}
-
-/**
- * Update the user's daily streak after completing a lesson.
- * @param {string} userId
- */
-async function updateStreak(userId) {
-  // TODO: Implement streak logic (compare lastCompleted date, reset or increment streak).
-  console.log("updateStreak not implemented yet for user:", userId);
-}
-
-/**
- * Reveal the summary panel with final score and XP earned.
- * @param {number} score
- * @param {number} total
- */
-function showSummary(score, total) {
-  const xpEarned = score * 10;
-
+function showSummary(finalScore, total) {
   quizSectionEl.classList.add("d-none");
-
-  summaryScoreEl.textContent = `You scored ${score} out of ${total}.`;
-  summaryXpEl.textContent = `You earned ${xpEarned} XP.`;
+  summaryScoreEl.textContent = `You scored ${finalScore} out of ${total}.`;
   summaryEl.classList.remove("d-none");
 }
 
